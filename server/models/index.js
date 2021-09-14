@@ -1,3 +1,4 @@
 const User = require('./User');
-const JobList = require('./JobList.js');
-module.exports = { User, JobList};
+const Applications = require('./Applications.js');
+const SavedJobs = require('./SavedJobs.js');
+module.exports = { User, Applications, SavedJobs};
