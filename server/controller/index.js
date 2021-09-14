@@ -8,11 +8,11 @@ router.get('/jobs', async (req,res) => {
     if(allApps && allSaved){
       res.status(200).json({allApps,allSaved});
     } else if(allApps){
-      res.status(200).json({allApps});
+      res.status(200).json({allApps,allSaved:[]});
     } else if(allSaved){
-      res.status(200).json({allSaved});
+      res.status(200).json({allApps:[],allSaved});
     } else {
-      res.status(404).json({message:"Could not find that data"});
+      res.status(404).json({allApps:[],allSaved:[],message:"Could not find that data"});
     }
   } catch (err){
     console.log(err);

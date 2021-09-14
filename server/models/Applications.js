@@ -21,7 +21,7 @@ const applicationSchema = new Schema({
     required: true,
   },
   dateSubmitted:{
-    type: Date, 
+    type: Date,
   }
 });
 
