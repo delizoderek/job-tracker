@@ -1,9 +1,24 @@
 import React,{useState,useEffect} from 'react';
 import API from '../utils/api';
+import Tabs from '../interactions/Tabs';
+import ListSavedJobs from './ListSavedJobs';
+import ListApplications from './ListApplications';
 
 const Homepage = () => {
   const [savedJobs,setSavedJobs] = useState([]);
   const [appliedJobs,setAppliedJobs] = useState([]);
+  const [currentTab,setCurrentTab] = useState('Saved');
+
+  const renderTab = () => {
+    if(currentTab === "Applied"){
+      return <ListApplications listApps={appliedJobs}/>;
+    } else {
+      return <ListSavedJobs savedJobs={savedJobs}/>;
+    }
+  }
+
+  const handleTabChange = (tab) => setCurrentTab(tab);
+
   useEffect(() => {
     API.getJobList().then((resp) => {
       const {allSaved,allApps,message} = resp.data;
@@ -16,15 +31,9 @@ const Homepage = () => {
     });
   },[])
   return (
-    <div className="col-12 d-flex flex-sm-column">
-      <h1>Saved Jobs</h1>
-      {savedJobs.map((item) => {
-        return <p>{item.jobTitle}</p>
-      })}
-      <h1>Applied Jobs</h1>
-      {appliedJobs.map((item) => {
-        return <p>{item.jobTitle}</p>
-      })}
+    <div className="w-100 p-2">
+      <Tabs currentTab={currentTab} handleTabChange={handleTabChange}/>
+      {renderTab()}
     </div>
   );
 };
