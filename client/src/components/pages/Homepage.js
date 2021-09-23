@@ -1,6 +1,6 @@
 import React,{useState,useEffect} from 'react';
 import API from '../utils/api';
-import Tabs from '../interactions/Tabs';
+import Tabs from '../UI/Tabs';
 import ListSavedJobs from './ListSavedJobs';
 import ListApplications from './ListApplications';
 

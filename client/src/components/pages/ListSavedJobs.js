@@ -1,6 +1,6 @@
 import React,{useState} from 'react';
 import SavedJobCard from '../partials/SavedJobCard';
-import Modal from '../interactions/Modal';
+import SaveJobForm from '../Forms/SavedJobForm';
 
 function ListSavedJobs({savedJobs}) {
   const [modalState, setModalState] = useState(false);
@@ -19,9 +19,7 @@ function ListSavedJobs({savedJobs}) {
       {savedJobs.map((item,i)=>{
         return <SavedJobCard key={i} jobInfo={item}/>
       })}
-      <Modal isActive={modalState} onClose={onClose} title="Add Job">
-        <h1>Hello from this modal</h1>
-      </Modal>
+      <SaveJobForm modalState={modalState} onClose={onClose}/>
     </div>
   );
 }
