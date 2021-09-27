@@ -1,9 +1,13 @@
 import React,{useState} from 'react';
+import { useJobContext } from '../../utils/GlobalState';
 import SavedJobCard from '../partials/SavedJobCard';
 import SaveJobForm from '../Forms/SavedJobForm';
 
-function ListSavedJobs({savedJobs}) {
+function ListSavedJobs() {
   const [modalState, setModalState] = useState(false);
+  const [state] = useJobContext();
+  const {savedJobs} = state;
+
   const onClose = () => {
     setModalState(false);
   };

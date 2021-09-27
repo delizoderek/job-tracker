@@ -13,9 +13,6 @@ const savedJobsSchema = new Schema({
     type: String,
     required: true,
   },
-  dateAdded: {
-    type: Date,
-  },
 });
 
 const SavedJobs = model("savedjobs", savedJobsSchema);

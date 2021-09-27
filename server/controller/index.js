@@ -38,7 +38,27 @@ router.post('/save-job', async (req,res) => {
   } else {
     res.status(404).json({status: false, message: 'No body provided'});
   }
-})
+});
+
+router.post('/save-app', async (req,res) => {
+  if(req.body){
+    req.body.dateSubmitted = Date.now();
+    try {
+      const newApp = await Applications.create(req.body);
+      if(newApp){
+        res.status(200).json({status:true, ...newApp});
+      } else {
+        res.status(404).json({status:false, message: 'Application not added'});
+      }
+    } catch (error) {
+      console.log(error);
+      res.status(500).json({status:false, message: 'Error on the server'});
+    }
+
+  } else {
+    res.status(404).json({status: false, message: 'No body provided'});
+  }
+});
 
 
 module.exports = router;
