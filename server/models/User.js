@@ -22,8 +22,14 @@ const userSchema = new Schema(
       type: String,
       required: true,
     },
-    // Track what the players has done maybe? or this could be a comments section
-    // contributions: [],
+    savedJobs: [{
+      type: Schema.Types.ObjectId,
+      ref:"savedjobs",
+    }],
+    jobsApplied: [{
+      type: Schema.Types.ObjectId,
+      ref:"applications",
+    }]
   },
   // set this to use virtual below
   {
@@ -47,11 +53,6 @@ userSchema.pre('save', async function (next) {
 userSchema.methods.isCorrectPassword = async function (password) {
   return bcrypt.compare(password, this.password);
 };
-
-//  MAybe you can count comments
-// userSchema.virtual('comments').get(function () {
-//   return this.savedBooks.length;
-// });
 
 const User = model('User', userSchema);
 
