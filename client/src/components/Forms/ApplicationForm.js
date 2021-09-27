@@ -27,9 +27,14 @@ export default function SavedJobForm(props) {
         }
     }
 
+    const handleInputChange = (event) => {
+        const { name, value } = event.target;
+        setFormState({ ...formState, [name]: value });
+      };
+
     const handleSubmit = async (event) => {
         event.preventDefault();
-        const res = await axios.post('http://localhost:3005/save-app',{...formState,processState:'Applied'});
+        const res = await axios.post('http://localhost:3005/save-app',formState);
         if(res.status){
             console.log('success');
             dispatch({
@@ -55,30 +60,29 @@ export default function SavedJobForm(props) {
                 <form onSubmit={handleSubmit}>
                     <div className='form-group'>
                         <label htmlFor='pos-title'>Position Title</label>
-                        <input id='pos-title' type='text' className="form-control" value={formState.jobTitle} onChange={handleChange}/>
+                        <input id='pos-title' name='jobTitle' type='text' className="form-control" value={formState.jobTitle} onChange={handleChange}/>
                     </div>
                     <div className='form-group'>
                         <label htmlFor='pos-company'>Company</label>
-                        <input id='pos-company' type='text' className="form-control" value={formState.company} onChange={handleChange}/>
+                        <input id='pos-company' name='company' type='text' className="form-control" value={formState.company} onChange={handleChange}/>
                     </div>
                     <div className='form-group'>
                         <label htmlFor='pos-id'>App Id</label>
-                        <input id='pos-id' type='text' className="form-control" value={formState.appId} onChange={handleChange}/>
+                        <input id='pos-id' name='appId' type='text' className="form-control" value={formState.appId} onChange={handleChange}/>
                     </div>
                     <div className='form-group'>
                         <label htmlFor='pos-link'>Link</label>
-                        <input id='pos-link' type='text' className="form-control" value={formState.appLink} onChange={handleChange}/>
+                        <input id='pos-link' name='appLink' type='text' className="form-control" value={formState.appLink} onChange={handleChange}/>
                     </div>
-                    {/* <div className='form-group'>
+                    <div className='form-group'>
                         <label htmlFor='app-state'>Application State</label>
-                        <select id='app-state'>
-                            <option>Applied</option>
-                            <option>Interview</option>
-                            <option>Offer</option>
-                            <option>Rejected</option>
+                        <select id='app-state' name='processState' value={formState.processState} onChange={handleInputChange}>
+                            <option value='Applied'>Applied</option>
+                            <option value='Interview'>Interview</option>
+                            <option value='Offer'>Offer</option>
+                            <option value='Rejected'>Rejected</option>
                         </select>
-                        <input id='pos-link' type='text' className="form-control" value={formState.appLink} onChange={handleChange}/>
-                    </div> */}
+                    </div>
                     <input type="submit" value="Submit"/>
                 </form>
             </Modal>
