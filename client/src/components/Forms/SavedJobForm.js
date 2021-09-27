@@ -29,7 +29,6 @@ export default function SavedJobForm(props){
         const res = await axios.post('http://localhost:3005/save-job',formState);
         if(res.status){
             console.log('success');
-            console.log(res.data);
             dispatch({
                 type:ADD_SAVED_JOB,
                 savedJob:res.data._doc,
