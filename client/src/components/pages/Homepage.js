@@ -7,7 +7,7 @@ import ListSavedJobs from './ListSavedJobs';
 import ListApplications from './ListApplications';
 
 const Homepage = () => {
-  const [dispatch] = useJobContext();
+  const [_,dispatch] = useJobContext();
   const [currentTab,setCurrentTab] = useState('Saved');
 
   const renderTab = () => {

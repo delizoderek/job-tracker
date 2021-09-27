@@ -7,7 +7,7 @@ function ListSavedJobs() {
   const [modalState, setModalState] = useState(false);
   const [state] = useJobContext();
   const {savedJobs} = state;
-
+  console.log(savedJobs);
   const onClose = () => {
     setModalState(false);
   };

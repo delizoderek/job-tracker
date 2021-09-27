@@ -24,13 +24,13 @@ export const reducer = (state, action) => {
     case ADD_SAVED_JOB:
       return {
         ...state,
-        savedJobs: [action.savedJob,...state.savedJobs],
+        savedJobs: [...state.savedJobs,action.savedJob],
       };
 
     case ADD_APP_JOB:
       return {
         ...state,
-        appliedJobs: [action.appliedJob,...state.appliedJobs],
+        appliedJobs: [...state.appliedJobs,action.appliedJob],
       };
 
     case REMOVE_SAVED_JOB:

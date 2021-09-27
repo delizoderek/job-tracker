@@ -6,7 +6,7 @@ import ApplicationForm from '../Forms/ApplicationForm';
 function ListApplications() {
   const [modalState, setModalState] = useState(false);
   const [state] = useJobContext();
-  const {listApps} = state;
+  const {appliedJobs} = state;
   const onClose = () => {
     setModalState(false);
   };
@@ -19,7 +19,7 @@ function ListApplications() {
         <h1>Applications Submitted</h1>
         <button className="btn btn-primary" onClick={showModal}>Add Application</button>
       </div>
-      {listApps.map((item,i)=>{
+      {appliedJobs.map((item,i)=>{
         return <JobAppCard key={i} jobInfo={item}/>
       })}
       <ApplicationForm modalState={modalState} onClose={onClose}/>
