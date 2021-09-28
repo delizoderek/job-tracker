@@ -8,6 +8,7 @@ const StoreProvider = ({ value = [], ...props }) => {
   const [state, dispatch] = useJobListReducer({
     savedJobs: [],
     appliedJobs: [],
+    loggedIn: false,
   });
 
   return <Provider value={[state, dispatch]} {...props} />;

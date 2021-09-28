@@ -10,6 +10,9 @@ const API = {
   },
   addApp: function(newApp){
     return axios.post(`${baseUrl}/save-app`,newApp);
+  },
+  login: function(credentials){
+    return axios.post(`${baseUrl}/auth/login`,credentials);
   }
 };
 

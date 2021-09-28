@@ -1,5 +1,8 @@
 // see SignupForm.js for comments
 import React, { useState } from 'react';
+import { useJobContext } from "../../utils/GlobalState";
+import { UPDATE_APP_JOBS, UPDATE_SAVED_JOBS } from "../../utils/actions";
+import API from "../Helpers/api";
 import { Form, Button, Alert } from 'react-bootstrap';
 
 import Auth from '../Helpers/AuthService';
@@ -8,6 +11,7 @@ const LoginForm = () => {
   const [userFormData, setUserFormData] = useState({ email: '', password: '' });
   const [validated] = useState(false);
   const [showAlert, setShowAlert] = useState(false);
+  const [state, dispatch] = useJobContext();
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
@@ -25,8 +29,24 @@ const LoginForm = () => {
     }
 
     try {
-      console.log(userFormData);
-      // Auth.login(data.login.token);
+      const data = await API.login(userFormData);
+      const {token,user} = data;
+      if(user.savedJobs.length > 0){
+        dispatch({
+          type: UPDATE_SAVED_JOBS,
+          savedJobs: user.savedJobs,
+        })
+      }
+
+      if(user.jobsApplied.length > 0){
+        dispatch({
+          type: UPDATE_SAVED_JOBS,
+          jobsApplied: user.jobsApplied,
+        })
+      }
+
+      console.log(token);
+      // Auth.login(token);
     } catch (err) {
       setShowAlert(true);
     }

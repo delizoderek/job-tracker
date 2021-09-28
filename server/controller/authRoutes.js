@@ -4,9 +4,22 @@ const {User,Applications, SavedJobs} = require('../models');
 
 // Login
 authRouter.post("/login", async (req, res) => {
+  const {email,password} = req.body;
   try {
-    console.log(req);
-    res.json(req.body);
+    const user = await User.findOne({email});
+
+    if(!user){
+      res.status(404).json({message:"Could not find user"});
+      return;
+    }
+    const checkPass = user.isCorrectPassword(password);
+    if(!checkPass){
+      res.status(404).json({message:"Could not find user"});
+      return;
+    }
+
+    const token = signToken(user);
+    res.status(200).json({token,user});
   } catch (err) {
     console.log(err);
     res.status(400).json(err);

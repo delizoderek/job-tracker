@@ -2,6 +2,7 @@ import { useReducer } from "react";
 import {
   UPDATE_SAVED_JOBS,
   UPDATE_APP_JOBS,
+  UPDATE_LOGIN,
   ADD_SAVED_JOB,
   ADD_APP_JOB,
   REMOVE_SAVED_JOB
@@ -43,6 +44,11 @@ export const reducer = (state, action) => {
         savedJobs: newState
       };
 
+    case UPDATE_LOGIN:
+      return{
+        ...state,
+        loggedIn: action.loggedin,
+      };
     default:
       return state;
   }

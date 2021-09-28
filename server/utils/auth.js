@@ -19,7 +19,7 @@ module.exports = {
         res.sendStatus(403);
       }
     } else {
-      res.sendStatus(401);
+      next();
     }
   },
   signToken: function ({ username, email, _id }) {
