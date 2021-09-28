@@ -2,16 +2,16 @@ import React,{useState,useEffect} from 'react';
 import {useJobContext} from '../../utils/GlobalState';
 import {UPDATE_APP_JOBS,UPDATE_SAVED_JOBS} from '../../utils/actions'
 import API from '../Helpers/api';
-import Tabs from '../UI/Tabs';
+import Navbar from '../UI/Navbar';
 import ListSavedJobs from './ListSavedJobs';
 import ListApplications from './ListApplications';
 
 const Homepage = () => {
   const [_,dispatch] = useJobContext();
-  const [currentTab,setCurrentTab] = useState('Saved');
+  const [currentTab,setCurrentTab] = useState('Saved Jobs');
 
   const renderTab = () => {
-    if(currentTab === "Applied"){
+    if(currentTab === "Applications"){
       return <ListApplications/>;
     } else {
       return <ListSavedJobs/>;
@@ -39,7 +39,7 @@ const Homepage = () => {
   },[])
   return (
     <div className="w-100 p-2">
-      <Tabs currentTab={currentTab} handleTabChange={handleTabChange}/>
+      <Navbar currentTab={currentTab} handleTabChange={handleTabChange} tabNames={['Saved Jobs','Applications']}/>
       {renderTab()}
     </div>
   );
