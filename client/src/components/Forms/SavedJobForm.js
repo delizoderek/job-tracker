@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useJobContext } from '../../utils/GlobalState';
-import { ADD_APP_JOB , ADD_SAVED_JOB} from '../../utils/actions';
+import { ADD_SAVED_JOB} from '../../utils/actions';
 import axios from 'axios';
 import Modal from '../UI/Modal';
 

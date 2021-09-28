@@ -1,8 +1,9 @@
 // see SignupForm.js for comments
 import React, { useState } from 'react';
 import { useJobContext } from "../../utils/GlobalState";
-import { UPDATE_APP_JOBS, UPDATE_SAVED_JOBS } from "../../utils/actions";
+import { UPDATE_APP_JOBS, UPDATE_SAVED_JOBS, UPDATE_LOGIN} from "../../utils/actions";
 import API from "../Helpers/api";
+import {validateEmail,checkPassword} from "../Helpers/InputValidation";
 import { Form, Button, Alert } from 'react-bootstrap';
 
 import Auth from '../Helpers/AuthService';
@@ -20,17 +21,17 @@ const LoginForm = () => {
 
   const handleFormSubmit = async (event) => {
     event.preventDefault();
-
     // check if form has everything (as per react-bootstrap docs)
     const form = event.currentTarget;
-    if (form.checkValidity() === false) {
+    if (validateEmail(userFormData.email)) {
       event.preventDefault();
       event.stopPropagation();
     }
-
+    console.log(userFormData);
     try {
-      const data = await API.login(userFormData);
-      const {token,user} = data;
+      const userResp = await API.login(userFormData);
+      const {token,user} = userResp.data;
+      console.log(user);
       if(user.savedJobs.length > 0){
         dispatch({
           type: UPDATE_SAVED_JOBS,
@@ -40,14 +41,18 @@ const LoginForm = () => {
 
       if(user.jobsApplied.length > 0){
         dispatch({
-          type: UPDATE_SAVED_JOBS,
+          type: UPDATE_APP_JOBS,
           jobsApplied: user.jobsApplied,
         })
       }
 
-      console.log(token);
-      // Auth.login(token);
+      dispatch({
+        type: UPDATE_LOGIN,
+        loggedIn: true,
+      })
+      Auth.login(token);
     } catch (err) {
+      console.log(err);
       setShowAlert(true);
     }
 
@@ -60,42 +65,40 @@ const LoginForm = () => {
 
   return (
     <>
-      <Form noValidate validated={validated} onSubmit={handleFormSubmit}>
-        <Alert dismissible onClose={() => setShowAlert(false)} show={showAlert} variant='danger'>
-          Something went wrong with your login credentials!
-        </Alert>
-        <Form.Group>
-          <Form.Label htmlFor='email'>Email</Form.Label>
-          <Form.Control
-            type='text'
-            placeholder='Your email'
+      <form onSubmit={handleFormSubmit}>
+        {/* <div className={showAlert ? "alert alert-warning alert-dismissible fade show" : "alert alert-warning alert-dismissible fade"} role="alert">
+          <strong>Holy guacamole!</strong> You should check in on some of those fields below.
+          <button type="button" className="btn-close" onClick={() => setShowAlert(false)} aria-label="Close"></button>
+        </div> */}
+        <div className='form-floating'>
+          <input
+            type='email'
+            placeholder='name@example.com'
             name='email'
+            className= {validateEmail(userFormData.email) ? 'form-control' : 'form-control is-invalid'}
             onChange={handleInputChange}
             value={userFormData.email}
             required
           />
-          <Form.Control.Feedback type='invalid'>Email is required!</Form.Control.Feedback>
-        </Form.Group>
-
-        <Form.Group>
-          <Form.Label htmlFor='password'>Password</Form.Label>
-          <Form.Control
+          <label htmlFor="email">Email address</label>
+        </div>
+        <div className='form-floating'>
+          <input
             type='password'
             placeholder='Your password'
             name='password'
+            className='form-control'
             onChange={handleInputChange}
             value={userFormData.password}
             required
           />
-          <Form.Control.Feedback type='invalid'>Password is required!</Form.Control.Feedback>
-        </Form.Group>
-        <Button
+          <label htmlFor='password'>Password</label>
+        </div>
+        <input
+          className='btn btn-outline-primary'
           disabled={!(userFormData.email && userFormData.password)}
-          type='submit'
-          variant='success'>
-          Submit
-        </Button>
-      </Form>
+          type='submit'/>
+      </form>
     </>
   );
 };
