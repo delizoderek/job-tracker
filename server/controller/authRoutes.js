@@ -32,7 +32,7 @@ authRouter.post("/logout", (req, res) => {
 });
 
 // Sign-Up
-authRouter.post("/", async (req, res) => {
+authRouter.post("/sign-up", async (req, res) => {
   try {
     const userData = await User.create(req.body);
     if(userData){
