@@ -1,10 +1,9 @@
 // see SignupForm.js for comments
 import React, { useState } from 'react';
 import { useJobContext } from "../../utils/GlobalState";
-import { UPDATE_APP_JOBS, UPDATE_SAVED_JOBS, UPDATE_LOGIN} from "../../utils/actions";
+import { UPDATE_APP_JOBS, UPDATE_SAVED_JOBS, UPDATE_LOGIN, SET_JWT} from "../../utils/actions";
 import API from "../Helpers/api";
-import {validateEmail,checkPassword} from "../Helpers/InputValidation";
-import { Form, Button, Alert } from 'react-bootstrap';
+import {validateEmail} from "../Helpers/InputValidation";
 
 import Auth from '../Helpers/AuthService';
 
@@ -49,6 +48,10 @@ const LoginForm = () => {
       dispatch({
         type: UPDATE_LOGIN,
         loggedIn: true,
+      });
+      dispatch({
+        type: SET_JWT,
+        jwt: token, 
       })
       Auth.login(token);
     } catch (err) {

@@ -2,15 +2,15 @@ const router = require('express').Router();
 const {User, Applications, SavedJobs} = require('../models');
 
 router.get('/jobs', async (req,res) => {
+    if(!req.user){
+      res.status(401).send('User needs to login');
+      return;
+    }
+    
     try{
-      const allApps = await Applications.find({});
-      const allSaved = await SavedJobs.find({});
-      if(allApps && allSaved){
-        res.status(200).json({allApps,allSaved});
-      } else if(allApps){
-        res.status(200).json({allApps,allSaved:[]});
-      } else if(allSaved){
-        res.status(200).json({allApps:[],allSaved});
+      const getUser = await User.findById(req.user._id).populate('savedJobs').populate('jobsApplied');
+      if(getUser.savedJobs || getUser.jobsApplied){
+        res.status(200).json({allApps: [...getUser.jobsApplied],allSaved: [...getUser.savedJobs]});
       } else {
         res.status(404).json({allApps:[],allSaved:[],message:"Could not find that data"});
       }
@@ -21,11 +21,19 @@ router.get('/jobs', async (req,res) => {
   });
   
   router.post('/save-job', async (req,res) => {
+    console.log(req.user);
+    console.log(req.body);
+    if(!req.user){
+      res.status(401).send('User needs to login');
+      return;
+    }
+
     if(req.body){
       req.body.dateAdded = Date.now();
       try {
         const newSave = await SavedJobs.create(req.body);
-        if(newSave){
+        const updateUser = await User.findByIdAndUpdate(req.user._id,{$addToSet: {savedJobs: newSave._id}})
+        if(newSave && updateUser){
           res.status(200).json({status:true, ...newSave});
         } else {
           res.status(404).json({status:false, message: 'Job not added'});

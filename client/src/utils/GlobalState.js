@@ -9,6 +9,7 @@ const StoreProvider = ({ value = [], ...props }) => {
     savedJobs: [],
     appliedJobs: [],
     loggedIn: false,
+    jwt: '',
   });
 
   return <Provider value={[state, dispatch]} {...props} />;

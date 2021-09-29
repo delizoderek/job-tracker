@@ -5,7 +5,8 @@ import {
   UPDATE_LOGIN,
   ADD_SAVED_JOB,
   ADD_APP_JOB,
-  REMOVE_SAVED_JOB
+  REMOVE_SAVED_JOB,
+  SET_JWT
 } from "./actions";
 
 export const reducer = (state, action) => {
@@ -47,7 +48,12 @@ export const reducer = (state, action) => {
     case UPDATE_LOGIN:
       return{
         ...state,
-        loggedIn: action.loggedin,
+        loggedIn: action.loggedIn,
+      };
+    case SET_JWT:
+      return{
+        ...state,
+        jwt: action.jwt,
       };
     default:
       return state;

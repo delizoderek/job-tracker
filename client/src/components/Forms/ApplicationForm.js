@@ -1,7 +1,7 @@
 import {useState} from 'react'
 import { useJobContext } from '../../utils/GlobalState';
 import { ADD_APP_JOB } from '../../utils/actions';
-import axios from 'axios';
+import API from '../Helpers/api';
 import Modal from '../UI/Modal';
 
 export default function SavedJobForm(props) {
@@ -34,7 +34,7 @@ export default function SavedJobForm(props) {
 
     const handleSubmit = async (event) => {
         event.preventDefault();
-        const res = await axios.post('http://localhost:3005/save-app',formState);
+        const res = await API.addApp(formState);
         if(res.status){
             console.log('success');
             dispatch({

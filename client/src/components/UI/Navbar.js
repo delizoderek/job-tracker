@@ -4,6 +4,8 @@ import Modal from "./Modal";
 import Tabs from "./Tabs";
 import LoginForm from "../Forms/LoginForm";
 import SignupForm from "../Forms/SignupForm";
+import API from "../Helpers/api";
+import Auth from "../Helpers/AuthService";
 
 function Navbar(props) {
   const [state] = useJobContext();
@@ -40,7 +42,7 @@ function Navbar(props) {
           tabNames={props.tabNames}
         />
         {state.loggedIn ? (
-          <button className="h-50 btn btn-outline-primary">Logout</button>
+          <button className="h-50 btn btn-outline-primary" onClick={() => Auth.logout()}>Logout</button>
         ) : (
           <button
             className="h-50 btn btn-outline-primary"

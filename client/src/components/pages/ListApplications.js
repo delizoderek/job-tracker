@@ -13,8 +13,9 @@ function ListApplications() {
   const showModal = () => {
     setModalState(true);
   }
+
   return (
-    <div>
+    <>
       <div className="d-flex justify-content-between align-items-center">
         <h1>Applications Submitted</h1>
         <button className="btn btn-primary" onClick={showModal}>Add Application</button>
@@ -23,7 +24,7 @@ function ListApplications() {
         return <JobAppCard key={i} jobInfo={item}/>
       })}
       <ApplicationForm modalState={modalState} onClose={onClose}/>
-    </div>
+    </>
   );
 }
 

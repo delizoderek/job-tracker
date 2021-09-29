@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { useJobContext } from '../../utils/GlobalState';
 import { ADD_SAVED_JOB} from '../../utils/actions';
-import axios from 'axios';
 import Modal from '../UI/Modal';
+import API from '../Helpers/api';
 
 export default function SavedJobForm(props){
     const [_,dispatch] = useJobContext();
@@ -26,7 +26,7 @@ export default function SavedJobForm(props){
 
     const handleSubmit = async (event) => {
         event.preventDefault();
-        const res = await axios.post('http://localhost:3005/save-job',formState);
+        const res = await API.saveJob(formState);
         if(res.status){
             console.log('success');
             dispatch({
