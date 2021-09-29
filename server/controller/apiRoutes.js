@@ -49,6 +49,13 @@ router.get('/jobs', async (req,res) => {
   });
   
   router.post('/save-app', async (req,res) => {
+    console.log(req.user);
+    console.log(req.body);
+    if(!req.user){
+      res.status(401).send('User needs to login');
+      return;
+    }
+
     if(req.body){
       req.body.dateSubmitted = Date.now();
       try {

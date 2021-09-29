@@ -4,7 +4,6 @@ import Modal from "./Modal";
 import Tabs from "./Tabs";
 import LoginForm from "../Forms/LoginForm";
 import SignupForm from "../Forms/SignupForm";
-import API from "../Helpers/api";
 import Auth from "../Helpers/AuthService";
 
 function Navbar(props) {

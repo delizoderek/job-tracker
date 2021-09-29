@@ -9,9 +9,9 @@ import Auth from '../Helpers/AuthService';
 
 const LoginForm = () => {
   const [userFormData, setUserFormData] = useState({ email: '', password: '' });
-  const [validated] = useState(false);
-  const [showAlert, setShowAlert] = useState(false);
-  const [state, dispatch] = useJobContext();
+  // const [validated] = useState(false);
+  // const [showAlert, setShowAlert] = useState(false);
+  const [_, dispatch] = useJobContext();
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
@@ -20,13 +20,11 @@ const LoginForm = () => {
 
   const handleFormSubmit = async (event) => {
     event.preventDefault();
-    // check if form has everything (as per react-bootstrap docs)
-    const form = event.currentTarget;
+    // check if form has everything (as per react-bootstrap docs)-
     if (validateEmail(userFormData.email)) {
       event.preventDefault();
       event.stopPropagation();
     }
-    console.log(userFormData);
     try {
       const userResp = await API.login(userFormData);
       const {token,user} = userResp.data;
@@ -56,7 +54,7 @@ const LoginForm = () => {
       Auth.login(token);
     } catch (err) {
       console.log(err);
-      setShowAlert(true);
+      // setShowAlert(true);
     }
 
     setUserFormData({

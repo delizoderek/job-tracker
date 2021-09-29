@@ -25,7 +25,8 @@ const Homepage = () => {
   const handleTabChange = (tab) => setCurrentTab(tab);
 
   useEffect(() => {
-    if (Auth.userLoggedIn()) {
+    console.log('is this running to much?');
+    const setDispatch = async () => {
       dispatch({
         type: UPDATE_LOGIN,
         loggedIn: true,
@@ -34,14 +35,18 @@ const Homepage = () => {
         type: SET_JWT,
         jwt: Auth.getToken(),
       });
+    }
+    if (Auth.userLoggedIn()) {
+      setDispatch();
     } else {
       if(Auth.isTokenExpired()){
         Auth.clearToken();
       }
     }
-  }, []);
+  }, [dispatch]);
 
   useEffect(() => {
+    console.log('is this running to much?');
     const loadData = async () => {
       try {
         const jobs = await API.getJobList(state.jwt);
@@ -65,7 +70,7 @@ const Homepage = () => {
     if (state.jwt !== "") {
       loadData();
     }
-  }, [state.jwt]);
+  }, [state.jwt,dispatch]);
 
   return (
     <div className="w-100 p-2">
