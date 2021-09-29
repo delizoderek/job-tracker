@@ -1,5 +1,5 @@
 import axios from 'axios';
-const baseUrl = 'https://dd-job-apps.herokuapp.com';
+const baseUrl = 'https://dd-job-apps.herokuapp.com'; //'http://localhost:3005'
 const token = localStorage.getItem('id_token');
 const API = {
   getJobList: function(tko){

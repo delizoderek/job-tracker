@@ -6,20 +6,20 @@ router.get('/jobs', async (req,res) => {
       res.status(401).send('User needs to login');
       return;
     }
-    
+
     try{
       const getUser = await User.findById(req.user._id).populate('savedJobs').populate('jobsApplied');
-      if(getUser.savedJobs || getUser.jobsApplied){
-        res.status(200).json({allApps: [...getUser.jobsApplied],allSaved: [...getUser.savedJobs]});
-      } else {
+      if(!getUser){
         res.status(404).json({allApps:[],allSaved:[],message:"Could not find that data"});
+      } else {
+        res.status(200).json({allApps: [...getUser.jobsApplied],allSaved: [...getUser.savedJobs]});
       }
     } catch (err){
       console.log(err);
       res.status(500).json(err);
     }
   });
-  
+
   router.post('/save-job', async (req,res) => {
     console.log(req.user);
     console.log(req.body);

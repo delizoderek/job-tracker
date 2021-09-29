@@ -28,7 +28,8 @@ const LoginForm = () => {
     try {
       const userResp = await API.login(userFormData);
       const {token,user} = userResp.data;
-      console.log(user);
+      console.log(user.savedJobs);
+      console.log(user.jobsApplied);
       if(user.savedJobs.length > 0){
         dispatch({
           type: UPDATE_SAVED_JOBS,
@@ -39,7 +40,7 @@ const LoginForm = () => {
       if(user.jobsApplied.length > 0){
         dispatch({
           type: UPDATE_APP_JOBS,
-          jobsApplied: user.jobsApplied,
+          appliedJobs: user.jobsApplied,
         })
       }
 
@@ -49,7 +50,7 @@ const LoginForm = () => {
       });
       dispatch({
         type: SET_JWT,
-        jwt: token, 
+        jwt: token,
       })
       Auth.login(token);
     } catch (err) {

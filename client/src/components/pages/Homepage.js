@@ -46,7 +46,6 @@ const Homepage = () => {
   }, [dispatch]);
 
   useEffect(() => {
-    console.log('is this running to much?');
     const loadData = async () => {
       try {
         const jobs = await API.getJobList(state.jwt);
