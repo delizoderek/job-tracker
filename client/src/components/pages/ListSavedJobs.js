@@ -22,9 +22,16 @@ function ListSavedJobs() {
           Add to Jobs
         </button>
       </div>
-      {savedJobs.map((item, i) => {
-        return <SavedJobCard key={i} jobInfo={item} />;
-      })}
+      <div className="d-flex flex-column align-items-center">
+        <div className="col-7 d-flex p-2">
+          <div className="col-4 fs-4 text-center">Position Title</div>
+          <div className="col-4 fs-4 text-center border-start border-end">Company Name</div>
+          <div className="col-4 fs-4 text-center">Application Submitted</div>
+        </div>
+        {savedJobs.map((item, i) => {
+          return <SavedJobCard key={i} jobInfo={item} />;
+        })}
+      </div>
       <SaveJobForm modalState={modalState} onClose={onClose} />
     </>
   );
