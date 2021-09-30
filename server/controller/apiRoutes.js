@@ -29,10 +29,9 @@ router.get('/jobs', async (req,res) => {
     }
 
     if(req.body){
-      req.body.dateAdded = Date.now();
       try {
         const newSave = await SavedJobs.create(req.body);
-        const updateUser = await User.findByIdAndUpdate(req.user._id,{$addToSet: {savedJobs: newSave._id}})
+        const updateUser = await User.findByIdAndUpdate(req.user._id,{$addToSet: {savedJobs: newSave._id}});
         if(newSave && updateUser){
           res.status(200).json({status:true, ...newSave});
         } else {
@@ -60,7 +59,8 @@ router.get('/jobs', async (req,res) => {
       req.body.dateSubmitted = Date.now();
       try {
         const newApp = await Applications.create(req.body);
-        if(newApp){
+        const updateUser = await User.findByIdAndUpdate(req.user._id,{$addToSet: {jobsApplied: newApp._id}});
+        if(newApp && updateUser){
           res.status(200).json({status:true, ...newApp});
         } else {
           res.status(404).json({status:false, message: 'Application not added'});
